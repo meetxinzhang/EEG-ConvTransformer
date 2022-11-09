@@ -1,6 +1,6 @@
 # encoding: utf-8
 """
-Forked from https://github.com/numediart/EEGLearn-Pytorch/blob/master/Utils.py
+Forked from https://github.com/numediart/EEGLearn-Pytorch
 Bashivan, et al. "Learning Representations from EEG with Deep Recurrent-Convolutional Neural Networks." International
 conference on learning representations (2016).
 This code has been created by p. bashivan source : https://github.com/pbashivan/EEGLearn
