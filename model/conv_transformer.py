@@ -21,12 +21,12 @@ class ConvTransformer(nn.Module):
             CTBlock(channels=channels, num_heads=num_heads, E=E)
             for _ in range(depth)])
 
-        p = (T-8+2*0)//4 + 1
+        p = ((T-8+2*0)//4 + 1)**2
         self.conv1 = nn.Conv2d(in_channels=channels, out_channels=F//2,
-                               kernel_size=(p, 3), stride=(1, 1))
+                               kernel_size=(p, 3), stride=(p, 1), padding=(0, 1))
         self.conv2 = nn.Conv2d(in_channels=channels, out_channels=F//2,
-                               kernel_size=(p, 5), stride=(1, 1))
-        self.bn = nn.BatchNorm3d(num_features=channels)
+                               kernel_size=(p, 5), stride=(p, 1), padding=(0, 2))
+        self.bn = nn.BatchNorm3d(num_features=1)
         self.elu = nn.ELU()
         self.fla = nn.Flatten(start_dim=1, end_dim=-1)
         self.l1 = nn.Linear(in_features=F*T, out_features=500)
@@ -41,7 +41,7 @@ class ConvTransformer(nn.Module):
         x1 = self.conv1(x)  # [b, F/2, 1, T]
         x2 = self.conv2(x)  # [b, F/2, 1, T]
         x = torch.cat((x1, x2), dim=1)  # [b, F, 1, T]
-        x = self.bn(x)
+        x = self.bn(x.unsqueeze(1)).squeeze()
         x = self.elu(x)
         x = self.fla(x)  # [b, F*T]
         x = self.l3(self.l2(self.l1(x)))  # [b, classes]
