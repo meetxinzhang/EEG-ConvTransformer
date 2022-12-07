@@ -31,7 +31,7 @@ def thread_read_write(x, y, pkl_filename):
 
 def go_through(filenames, pkl_path):
     for f in tqdm(filenames, desc=' Total', position=0, leave=True, colour='YELLOW', ncols=80):
-        eeg, y = read_eeg_mat(f)
+        eeg, y = read_eeg_mat(f)  # [n_samples=5184, t_length=32, channels=62]
 
         # -----------------
         samples, time, channels = np.shape(eeg)

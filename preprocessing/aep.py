@@ -65,7 +65,7 @@ def gen_images(locs, features, n_gridpoints, normalize=True,
                                 Features corresponding to each frequency band are concatenated.
                                 (alpha1, alpha2, ..., beta1, beta2,...)
     :param n_gridpoints: Number of pixels in the output images
-    :param normalize:   Flag for whether to normalize each band over all samples
+    :param normalize:   Flag for whether to normalize each band ove     r all samples
     :param augment:     Flag for generating augmented images
     :param pca:         Flag for PCA based data augmentation
     :param std_mult     Multiplier for std of added noise
@@ -82,7 +82,8 @@ def gen_images(locs, features, n_gridpoints, normalize=True,
     assert features.shape[1] % nElectrodes == 0
     n_colors = int(features.shape[1] / nElectrodes)
     for c in range(n_colors):
-        feat_array_temp.append(features[:, c * nElectrodes: nElectrodes * (c + 1)])
+        feat_array_temp.append(features[:,
+                               c * nElectrodes: nElectrodes * (c + 1)])
     # if augment:
     #     if pca:
     #         for c in range(n_colors):
