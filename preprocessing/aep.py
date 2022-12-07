@@ -65,7 +65,7 @@ def gen_images(locs, features, n_gridpoints, normalize=True,
                                 Features corresponding to each frequency band are concatenated.
                                 (alpha1, alpha2, ..., beta1, beta2,...)
     :param n_gridpoints: Number of pixels in the output images
-    :param normalize:   Flag for whether to normalize each band ove     r all samples
+    :param normalize:   Flag for whether to normalize each band overall samples
     :param augment:     Flag for generating augmented images
     :param pca:         Flag for PCA based data augmentation
     :param std_mult     Multiplier for std of added noise
