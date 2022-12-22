@@ -40,5 +40,6 @@ I have to down-sample EEG raw data in channels dim to make it compatible with 64
 
 [4] https://github.com/numediart/EEGLearn-Pytorch
 
-## End
-This is a developing implementation, welcome to commit your request and issues.
+## Note
+Here is a bound version and will not be updated, You may want to find the author edition:
+https://github.com/MeetXinZhang/EEG-ConvTransformer
