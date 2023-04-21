@@ -21,11 +21,12 @@ Remember to pass two filepath.
 Now, You can run main.py to start you training task. Testing or Validation can be easily writen by modify this file.
 
 ## Problems
-1) Uncertain coding when do AEP in /data_load/serialize.py due to undisclosed details in citation [2]: 
+~~1) Uncertain coding when do AEP in /data_load/serialize.py due to undisclosed details in citation [2]:~~
 
-&nbsp; &nbsp; `"However, contrary to the three frequency power bands from the earlier work, the AEP and interpolation are applied to the preprocessed signal to form a single channel mesh of G1 × G2 per time-frame."`. 
+~~&nbsp; &nbsp; `"However, contrary to the three frequency power bands from the earlier work, the AEP and interpolation are applied to the preprocessed signal to~~
+~~form a single channel mesh~~ ~~of G1 × G2 per time-frame."`.~~
 
-&nbsp; &nbsp; Read chapter 3.1 of citation[1] for more details. It's welcome to help me to refine this repository.
+~~&nbsp; &nbsp; Read chapter 3.1 of citation[1] for more details. It's welcome to help me to refine this repository.~~
 
 2) I got time-out error when download 128-channels version electrodes XYZ locations from: ftp://ftp.egi.com/pub/support/Documents/net_layouts/hcgsn_128.pdf.
 I have to down-sample EEG raw data in channels dim to make it compatible with 64-channels version.
