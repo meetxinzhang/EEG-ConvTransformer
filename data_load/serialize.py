@@ -9,7 +9,7 @@
 import glob
 import platform
 from tqdm import tqdm
-from data_load.read_mat import read_eeg_mat, read_locs_mat
+from data_load.read_mat import read_eeg_mat, read_locs_xlsx
 from joblib import Parallel, delayed
 import pickle
 import numpy as np
@@ -22,7 +22,7 @@ locs = None
 
 def thread_read_write(x, y, pkl_filename):
     """Writes and dumps the processed pkl file for each stimulus(or called subject).
-    [time, channels=127], y
+    [time, channels=124], y
     """
     with open(pkl_filename + '.pkl', 'wb') as file:
         pickle.dump(x, file)
@@ -31,7 +31,7 @@ def thread_read_write(x, y, pkl_filename):
 
 def go_through(filenames, pkl_path):
     for f in tqdm(filenames, desc=' Total', position=0, leave=True, colour='YELLOW', ncols=80):
-        eeg, y = read_eeg_mat(f)  # [n_samples=5184, t_length=32, channels=62]
+        eeg, y = read_eeg_mat(f)  # [n_samples=5184, t_length=32, channels=124]
 
         # -----------------
         samples, time, channels = np.shape(eeg)
@@ -63,7 +63,9 @@ def file_scanf(path, endswith, sub_ratio=1):
 
 
 if __name__ == "__main__":
-    path = 'E:/Datasets/Stanford_digital_repository'
+    path = 'G:/Datasets/Stanford_digital_repository'
     filenames = file_scanf(path, endswith='.mat')
-    locs = read_locs_mat('E:/Datasets/Stanford_digital_repository/electrodes_locations/Neuroscan_locs_orig.mat')
-    go_through(filenames, pkl_path=path+'/img_pkl/')
+    locs = read_locs_xlsx('D:/GitHub/EEG-ConvTransformer/data_load/electrodes_locations/GSN-HydroCel-128.xlsx')
+    # locs = read_locs_mat('E:/Datasets/Stanford_digital_repository/electrodes_locations/Neuroscan_locs_orig.mat')
+
+    go_through(filenames, pkl_path=path+'/img_pkl_124/')

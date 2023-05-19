@@ -9,6 +9,7 @@
 
 import numpy as np
 import scipy.io
+import pandas as pd
 from matplotlib import pyplot as plt
 
 category = {1: 'Human Body',
@@ -19,22 +20,7 @@ category = {1: 'Human Body',
             6: 'Inanimate Object'}
 
 
-# return a dict
-# mat = scipy.io.loadmat('E:/Datasets/Stanford_digital_repository/electrodes_locations/Neuroscan_locs_orig.mat')
-# print(mat.keys(), '\n')
-# print(mat['__header__'], '\n')
-# print(mat['__version__'], '\n')
-# print(mat['__globals__'], '\n')
-# print('sub: ', mat['sub'])
-# print('Fs: ', mat['Fs'])
-# print('N: ', mat['N'], '\n')
-# print('T: ', mat['T'], '\n')
-# print('exemplarLabels: ', mat['exemplarLabels'], '\n')
-# print('categoryLabels: ', mat['categoryLabels'], '\n')
-# print('X_2D: ', mat['X_2D'], '\n')
-# print('X_3D: ', mat['X_3D'], '\n')
-
-def read_locs_mat(path='E:/Datasets/Stanford_digital_repository/electrodes_locations/Neuroscan_locs_orig.mat'):
+def read_locs_mat(path='D:/GitHub/EEG-ConvTransformer/data_load/electrodes_locations/Neuroscan_locs_orig.mat'):
     mat = scipy.io.loadmat(path)['A']
     # [64, 3]
     # x = mat[:, 0]
@@ -43,6 +29,17 @@ def read_locs_mat(path='E:/Datasets/Stanford_digital_repository/electrodes_locat
     # plt.scatter(x, y, z)
     # plt.show()
     return mat[:-2, :]  # [62, 3]
+
+
+def read_locs_xlsx(path='D:/GitHub/EEG-ConvTransformer/data_load/electrodes_locations/GSN-HydroCel-128.xlsx'):
+    table = pd.read_excel(path, skiprows=1, index_col=0)
+    # print(np.shape(table.values[:-3, :]))  # [124 3]
+    # x = table.values[:, 0]
+    # y = table.values[:, 1]
+    # z = table.values[:, 2]
+    # plt.scatter(x, y, z)
+    # plt.show()
+    return table.values[:-3, :]  # [124, 3]
 
 
 def read_eeg_mat(filepath='E:/Datasets/Stanford_digital_repository/S1.mat'):
@@ -57,7 +54,8 @@ def read_eeg_mat(filepath='E:/Datasets/Stanford_digital_repository/S1.mat'):
     # You don't need to do this if you can download the 128 channel locations from:
     #                  ftp://ftp.egi.com/pub/support/Documents/net_layouts/hcgsn_128.pdf
     # Please send me the copy if you get above PDF, thanks.
-    X_3D = X_3D[::2, :, :].transpose(2, 1, 0)  # [n_samples=5184, t_length=32, channels=62]
+    # X_3D = X_3D[::2, :, :].transpose(2, 1, 0)  # [n_samples=5184, t_length=32, channels=62]
+    X_3D = np.transpose(X_3D, (2, 1, 0))  # [n_samples=5184, t_length=32, channels=124]
 
     labels = np.asarray(mat['categoryLabels']).squeeze()  # [5184]
     assert len(labels) == len(X_3D)
@@ -65,4 +63,19 @@ def read_eeg_mat(filepath='E:/Datasets/Stanford_digital_repository/S1.mat'):
 
 
 if __name__ == '__main__':
-    read_eeg_mat()
+    read_locs_xlsx()
+
+    # return a dict
+    # mat = scipy.io.loadmat('G:/Datasets/Stanford_digital_repository/S1.mat')
+    # print(mat.keys(), '\n')
+    # print(mat['__header__'], '\n')
+    # print(mat['__version__'], '\n')
+    # print(mat['__globals__'], '\n')
+    # print('sub: ', mat['sub'])
+    # print('Fs: ', mat['Fs'])
+    # print('N: ', mat['N'], '\n')
+    # print('T: ', mat['T'], '\n')
+    # print('exemplarLabels: ', mat['exemplarLabels'], '\n')
+    # print('categoryLabels: ', mat['categoryLabels'], '\n')
+    # print('X_2D: ', np.shape(mat['X_2D']), '\n')
+    # print('X_3D: ', np.shape(mat['X_3D']), '\n')  # [124 32 5188]
